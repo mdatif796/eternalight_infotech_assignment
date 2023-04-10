@@ -76,3 +76,54 @@ module.exports.getAuthenticatedUser = async (req, res) => {
     });
   }
 };
+
+module.exports.editUser = async (req, res) => {
+  try {
+    if (req.body.password !== req.body.confirm_password) {
+      return res.status(401).json({
+        success: false,
+        message: "password and confirm_password should be matched",
+      });
+    }
+    // get jwt token from request headers
+    const token = req.headers.authorization?.split(" ")[1];
+    // if token not exist
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Authorization token needed",
+      });
+    }
+    // extract user from jwt token
+    let user = jwt.verify(token, process.env.JWTSECRETKEY);
+    if (user.email !== req.body.email) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized access",
+      });
+    }
+    // find user
+    user = await User.findOne({ email: req.body.email });
+    // if user exist
+    if (user) {
+      user.name = req.body.name;
+      user.password = req.body.password;
+      await user.save();
+      return res.status(201).json({
+        success: true,
+        message: "User edited !!",
+        user: user,
+        jwt_token: jwt.sign(user.toJSON(), process.env.JWTSECRETKEY),
+      });
+    }
+    return res.status(401).json({
+      success: false,
+      message: "User not found",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
