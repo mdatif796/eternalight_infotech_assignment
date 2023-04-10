@@ -1,0 +1,49 @@
+.nav {
+  display: flex;
+  /* background: #6200ee; */
+  padding: 10px 20px;
+  align-items: center;
+  justify-content: space-between;
+  color: #0167bc;
+}
+.logo {
+  height: 40px;
+}
+.nav .userDp {
+  height: 40px;
+}
+.nav .user {
+  display: flex;
+  align-items: center;
+}
+.nav span {
+  margin-left: 10px;
+  color: #0167bc;
+}
+.nav .rightNav {
+  display: flex;
+  color: #fff;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  color: #0167bc;
+}
+.nav .navLinks ul {
+  display: flex;
+  list-style-type: none;
+  color: #0167bc;
+}
+.nav .navLinks ul li {
+  padding: 0 4px;
+}
+.nav .navLinks ul li a {
+  text-decoration: none;
+  color: #0167bc;
+}
+.nav .navLinks ul li a:hover {
+  text-decoration: underline;
+}
+.nav .navLinks ul li:hover {
+  cursor: pointer;
+}
