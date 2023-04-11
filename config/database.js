@@ -1,5 +1,6 @@
-require("dotenv").config();
+// require("dotenv").config();
 const mongoose = require("mongoose");
+const env = require("./environment");
 
 // if connects with the database
 main()
@@ -15,6 +16,6 @@ main()
 // function for connecting with the database
 async function main() {
   await mongoose.connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${process.env.DATABASE_PASS}@cluster0.lymyd.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
+    `mongodb+srv://${env.MONGO_USER}:${env.DATABASE_PASS}@cluster0.lymyd.mongodb.net/${env.MONGO_DATABASE}?retryWrites=true&w=majority`
   );
 }

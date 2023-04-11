@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-require("dotenv").config();
+// require("dotenv").config();
+const env = require("../config/environment");
 
 module.exports.createUser = async (req, res) => {
   try {
@@ -35,7 +36,7 @@ module.exports.authenticateUser = async (req, res) => {
           success: true,
           user: user,
           message: "successfully authenticated the user",
-          jwt_token: jwt.sign(user.toJSON(), process.env.JWTSECRETKEY),
+          jwt_token: jwt.sign(user.toJSON(), env.JWTSECRETKEY),
         });
       }
       return res.status(401).json({
@@ -63,7 +64,7 @@ module.exports.getAuthenticatedUser = async (req, res) => {
       });
     }
     // extract user from jwt token
-    let user = jwt.verify(token, process.env.JWTSECRETKEY);
+    let user = jwt.verify(token, env.JWTSECRETKEY);
 
     return res.status(201).json({
       success: true,
@@ -95,7 +96,7 @@ module.exports.editUser = async (req, res) => {
       });
     }
     // extract user from jwt token
-    let user = jwt.verify(token, process.env.JWTSECRETKEY);
+    let user = jwt.verify(token, env.JWTSECRETKEY);
     if (user.email !== req.body.email) {
       return res.status(401).json({
         success: false,
@@ -113,7 +114,7 @@ module.exports.editUser = async (req, res) => {
         success: true,
         message: "User edited !!",
         user: user,
-        jwt_token: jwt.sign(user.toJSON(), process.env.JWTSECRETKEY),
+        jwt_token: jwt.sign(user.toJSON(), env.JWTSECRETKEY),
       });
     }
     return res.status(401).json({
